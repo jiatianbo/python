@@ -31,6 +31,6 @@ def spaceConvert(url):
 	return url.replace(' ', '%20')
 
 def makeRequestInfo(url):
-	headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
+	headers = {'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0'}
 	url = spaceConvert(url)
 	return headers, url
