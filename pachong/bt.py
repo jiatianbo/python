@@ -40,5 +40,52 @@ def recordError(url,errorCode):
     f = open("errorUrl"'a')
     f.write(url + '#' + str(errorCode) + '\n')
     f.close()
+def parseUrl(data):
+    global indexUrl
+    pattern = re.compile(r'\"%s[\s\S]*?\"' % indexUrl)
+    l = pattern.findall(data)
+    return l
 
-    
+def getDownInfo(data):
+    global count
+    pattern = re.compile(r'function down[\s\S]*?torrent[\s\S]*?\"')
+    fnDown = pattern.search(data)
+    downUrl = false
+    title = "NotFound" + str(count)
+    if fnDown:
+        pattern = re.compile(r'\"http://torrent\.[\s\S]*?\"')
+        url = pattern.search(fnDown.group())
+        if url:
+            downUrl = url.group()
+            pattern = re.compile(r'<title>[\s\S]*?</title>')
+            t = pattern.search(data)
+            if t:
+                title = t.group().split('>')[1].split('<')[0]
+        return downUrl,title
+
+    def run(url):
+        global allUrl,urlList,count,layer
+        data = crawler.urlopen(url)
+        if type(data) == str and not url in allUrl:
+            allUrl[url] = True
+            #save(url,data)
+            tmplist = parseUrl(data)
+            for x in tmplist:
+                x = x[1:-1]
+                if not x in allUrl:
+                    urlList.append(x)
+            downUrl,title = getDownInfo(data)
+            if downUrl:
+                download(downUrl,title)
+
+        elif type(data) == int:
+            recordError(url,data)
+
+if __name__ == '__main__':
+    p = Pool(10)
+    while len(urlList) > 0:
+        backup = copy.deepcopy(urlList)
+        del urlList[:]
+        p.map(run.backup)
+    p.close()
+    p.join()
