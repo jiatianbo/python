@@ -1,7 +1,7 @@
 软件名称：pachong
 中文名称：爬种
 源码地址：https://github.com/jiatianbo/python/tree/master/pachong
-下载地址：http://pan.baidu.com/s/1pL32q3h 密码：1jkp
+下载地址：http://pan.baidu.com/s/1hsI9A76 密码：iqfz
 作者：	  贾甜博
 ----------------------------------------------------------------------------------------------------------
 免责声明：
